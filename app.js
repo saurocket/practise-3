@@ -105,16 +105,16 @@ app.get('/logout',async (req, res) => {
         return
     }
     try {
-        const userId = jwt.decode(token, process.env.TOKEN_SECRET_KEY)
-        console.log(userId.id)
-        //todo fix this User.findByIdAndUpdate
-        const user = await User.findByIdAndUpdate(userId.id,{token: null} )
-        console.log(user)
-        res.status(201)
+        const {user_id} = jwt.decode(token, process.env.TOKEN_SECRET_KEY)
+        console.log(user_id)
+        const user = await User.findByIdAndUpdate(user_id,{token: null})
+
+        res.status(200).send('Logout is success')
 
 
     }catch (e) {
-        console.log(e)
+
+       res.status(401).send("Authefication error")
     }
 
 
